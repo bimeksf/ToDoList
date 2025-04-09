@@ -1,8 +1,9 @@
 import {  useEffect, useState } from 'react'
 import { nanoid } from 'nanoid'
 import './App.css'
-
 import Task from './Task'
+
+import React from 'react';
 
 export default function App() {
   const [data, setData] = useState([])
@@ -11,6 +12,10 @@ export default function App() {
   const [filter, setFilter] = useState("all")
   const [priority, setPriority] = useState("all");
   const [deadline, setDeadline] = useState("");
+
+
+
+
 
 
 const remainTask = data.filter(task=> !task.completed).length
@@ -104,33 +109,35 @@ const filters = ["all", "completed", "incomplete"];
 const priorities = ["all","low", "medium", "high"]
 return <>
 
-<h2>remaingin tasks : {remainTask} </h2>
+<h2 className='text-2xl '>remaining tasks : {remainTask} </h2>
 
 
-{filters.map(f=><button key={f} className={filter=== f ? "active" : ""}   onClick={()=>setFilter(f)}>{f.toUpperCase()}</button>)}
-{priorities.map(f=><button key={f} className={priority ===f ? "active" : ""} onClick={()=>setPriority(f)} >{f}</button>)}
+{filters.map(f=><button key={f} className={filter=== f ? "bg-blue-300 rounded-md text-white font-bold p-2 m-2 hover:bg-blue-300 cursor-pointer" : "p-2 m-2 rounded-md hover:bg-blue-300 cursor-pointer"}   onClick={()=>setFilter(f)}>{f.toUpperCase()}</button>)}
+{priorities.map(f=><button key={f} className={priority ===f ? "bg-blue-300 rounded-md text-white font-bold p-2 m-2" : "p-2 m-2 rounded-md hover:bg-blue-300 cursor-pointer"} onClick={()=>setPriority(f)} >{f}</button>)}
 
-
-<form onSubmit={e => { e.preventDefault(); handleTask(); }}>
-  <input 
+<form onSubmit={e => { e.preventDefault(); handleTask(); }} className='grid grid-cols-2 grid-rows-4 gap-4'>
+  <input className='bg-gray-300 outline-2 outline-blue-700 p-2 text-sm focus:outline-4 focus:outline-emerald-500  col-span-2'
     type="text" 
     onChange={handleChange}
-    value={inputText}
+    value={inputText} 
+    placeholder='add Task'
   />
-       <label>
-      Write your description:
-      <textarea name="postContent" placeholder='you can add description later' rows={4} cols={40} onChange={handleDescription}     value={inputArea}/>
-    </label>
-    <select   onChange={handleOption} value={priority}>
+      <textarea name="postContent" placeholder='you can add description later' rows={4} cols={40} onChange={handleDescription}     value={inputArea} className=' focus:outline-4 focus:outline-emerald-500 bg-gray-300 outline-2 outline-blue-700 p-2 text-sm'/>
+
+    <select   onChange={handleOption} value={priority} className='bg-amber-400 '  >
+            <option  value=""  disabled selected >Select priority</option>
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
 
           </select>
+<label htmlFor="" className='justify-self-center self-center flex flex-col items-center col-span-2'>
+Set Deadline
+  <input type="date"    onChange={e=>{setDeadline(e.target.value)}} value={deadline} className='p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 bg-white' />
 
-  <input type="date"    onChange={e=>{setDeadline(e.target.value)}} value={deadline} />
+</label>
 
-  <button type="submit">Add</button>
+  <button type="submit" className='px-4 py-2 bg-emerald-500 rounded-md hover:scale-110 col-span-2'>Add</button>
 </form>
 
 

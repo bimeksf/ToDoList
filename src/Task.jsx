@@ -45,7 +45,7 @@ export default function Task({ task, onToggle, handleDelete, onEdit }) {
 
   return (
     <>
-      <li className={task.completed ? "underline" : ""} onDoubleClick={()=>setIsEditing(true) }>
+      <li className={task.completed ? "underline bg-blue-300 rounded-md m-4" : "bg-blue-300 rounded-md m-4"} onDoubleClick={()=>setIsEditing(true) }>
         {isEditing ? (
           <div className='grid grid-cols-2 grid-rows-4 gap-4'>
 
@@ -83,9 +83,12 @@ export default function Task({ task, onToggle, handleDelete, onEdit }) {
           checked={task.completed}
           onChange={() => onToggle(task.id)}
         />}
+     {!isEditing && <button onClick={() => handleDelete(task.id)}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+</svg>
+</button>}
       </li>
 
-     {!isEditing && <button onClick={() => handleDelete(task.id)}>X</button>}
 
       {isEditing && (
         <div className="flex justify-center items-center gap-4">

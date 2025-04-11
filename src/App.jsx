@@ -2,7 +2,7 @@ import {   useEffect, useState } from 'react'
 import { nanoid } from 'nanoid'
 import './App.css'
 import Task from './Task'
-
+import TaskForm from './TaskForm'
 import React from 'react';
 
 export default function App() {
@@ -114,37 +114,12 @@ return <>
 
 <h2 className='text-2xl '>remaining tasks : {remainTask} </h2>
 
-
 {filters.map(f=><button key={f} className={filter=== f ? "bg-blue-300 rounded-md text-white font-bold p-2 m-2 hover:bg-blue-300 cursor-pointer" : "p-2 m-2 rounded-md hover:bg-blue-300 cursor-pointer"}   onClick={()=>setFilter(f)}>{f.toUpperCase()}</button>)}
 {priorities.map(f=><button key={f} className={priority ===f ? "bg-blue-300 rounded-md text-white font-bold p-2 m-2" : "p-2 m-2 rounded-md hover:bg-blue-300 cursor-pointer"} onClick={()=>setPriority(f)} >{f}</button>)}
 
   <button onClick={handleShowForm} className='bg-red-700 hover:scale-105 cursor-pointer'>{showForm ? "close" : "add task"}</button>
 
-{showForm && <form onSubmit={e => { e.preventDefault(); handleTask(); }} className='grid grid-cols-1 grid-rows-4 gap-2 max-w-sm mx-auto '>
-  <input className='h-10  bg-gray-300 outline-2 outline-blue-700 p-2 text-sm focus:outline-4 focus:outline-emerald-500  col-span-2'
-    type="text" 
-    onChange={handleChange}
-    value={inputText} 
-    placeholder='add Task'
-  />
-      <textarea name="postContent" placeholder='you can add description later' rows={4} cols={40} onChange={handleDescription}     value={inputArea} className='h-15 focus:outline-4 focus:outline-emerald-500 bg-gray-300 outline-2 outline-blue-700 p-2 text-sm'/>
-
-    <select   onChange={handleOption} value={priority} className='bg-amber-400 p-2 '  >
-            <option  value=""  disabled selected >Select priority</option>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-
-          </select>
-<label htmlFor="" className='justify-self-center self-center flex flex-col items-center col-span-2 '>
-Set Deadline
-  <input type="date"    onChange={e=>{setDeadline(e.target.value)}} value={deadline} className='p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 bg-white' />
-
-</label>
-
-  <button type="submit" className='px-2 py-1 bg-emerald-500 rounded-md hover:scale-110 col-span-2'>Add</button>
-</form>}
-
+{showForm && <TaskForm onSubmit={handleTask} handleChange={handleChange} inputText={inputText} handleDescription={handleDescription} inputArea={inputArea} handleOption={handleOption} priority={priority} setDeadline={setDeadline} deadline={deadline} />}
 
 <ul>
   
@@ -159,5 +134,7 @@ Set Deadline
 
 
 }
+
+
 
 

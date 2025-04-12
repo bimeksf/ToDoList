@@ -1,10 +1,10 @@
 import {   useEffect, useState } from 'react'
 import { nanoid } from 'nanoid'
 import './App.css'
-import Task from './Task'
-import TaskForm from './TaskForm'
+import Task from './components/Task'
+import TaskForm from './components/TaskForm'
 import React from 'react';
-
+import FilteredData from './components/FilteredData'
 export default function App() {
   const [data, setData] = useState([])
   const [inputText, setInputText] = useState('')
@@ -13,7 +13,8 @@ export default function App() {
   const [priority, setPriority] = useState("all");
   const [deadline, setDeadline] = useState("");
   const [showForm, setShowForm] = useState(false)
-
+  
+  const taskFormProp = {onSubmit : handleTask, handleChange ,inputText, handleDescription, inputArea, handleOption, priority, setDeadline, deadline }
 
 function handleShowForm (){
   setShowForm(prev=>!prev)
@@ -23,20 +24,7 @@ function handleShowForm (){
 
 const remainTask = data.filter(task=> !task.completed).length
 
-const filteredData  = data.filter((task) => {
-
-  if (filter === "all") return true;
-
-  const filterStatus =
-    filter === "completed" ? task.completed :
-    filter === "incomplete" ? !task.completed :
-    true;
-
- 
-    const priorityStatus = priority === "all" || task.priority === priority;
-
-  return filterStatus && priorityStatus;
-});
+const filteredData = FilteredData(data,filter,priority )
 
 
 
@@ -55,7 +43,6 @@ const filteredData  = data.filter((task) => {
 
 
   },[])
-
 
 
 function handleDescription(e){
@@ -110,16 +97,31 @@ function handleEdit (id, newText, newDesc, newPriority, newDeadline){
 
 const filters = ["all", "completed", "incomplete"];
 const priorities = ["all","low", "medium", "high"]
+
+
+
 return <>
 
-<h2 className='text-2xl '>remaining tasks : {remainTask} </h2>
+
+{remainTask > 0 && <h2 className='text-2xl '>remaining tasks : {remainTask} </h2> }
+
+<nav>
 
 {filters.map(f=><button key={f} className={filter=== f ? "bg-blue-300 rounded-md text-white font-bold p-2 m-2 hover:bg-blue-300 cursor-pointer" : "p-2 m-2 rounded-md hover:bg-blue-300 cursor-pointer"}   onClick={()=>setFilter(f)}>{f.toUpperCase()}</button>)}
 {priorities.map(f=><button key={f} className={priority ===f ? "bg-blue-300 rounded-md text-white font-bold p-2 m-2" : "p-2 m-2 rounded-md hover:bg-blue-300 cursor-pointer"} onClick={()=>setPriority(f)} >{f}</button>)}
+</nav>
 
-  <button onClick={handleShowForm} className='bg-red-700 hover:scale-105 cursor-pointer'>{showForm ? "close" : "add task"}</button>
 
-{showForm && <TaskForm onSubmit={handleTask} handleChange={handleChange} inputText={inputText} handleDescription={handleDescription} inputArea={inputArea} handleOption={handleOption} priority={priority} setDeadline={setDeadline} deadline={deadline} />}
+
+  <button onClick={handleShowForm} className={`bg-emerald-500 hover:scale-105 cursor-pointer mx-auto p-4 rounded-md m-5 ${showForm ? " bg-red-500 " : ""}`}  >{showForm ? "close" : "add task"}</button>
+  <div
+  className={`transition-all duration-500 ease-out transform ${
+    showForm ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none h-0"
+  }`}
+>
+  <TaskForm {...taskFormProp} />
+</div>
+
 
 <ul>
   

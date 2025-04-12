@@ -3,7 +3,7 @@ import React from 'react';
 
 
 export default function TaskForm({onSubmit, handleChange, inputText, handleDescription, inputArea, handleOption, priority, setDeadline, deadline}) {
-    return <form onSubmit={(e) => { e.preventDefault(); onSubmit(); } } className='grid grid-cols-1 grid-rows-4 gap-2 max-w-sm mx-auto '>
+    return <form onSubmit={(e) => { e.preventDefault(); onSubmit(); } } className='grid grid-cols-1 grid-rows-4 gap-2 max-w-sm mx-auto bg-blue-300 rounded-md p-4'>
       <input className='h-10  bg-gray-300 outline-2 outline-blue-700 p-2 text-sm focus:outline-4 focus:outline-emerald-500  col-span-2'
         type="text"
         onChange={handleChange}
@@ -11,7 +11,7 @@ export default function TaskForm({onSubmit, handleChange, inputText, handleDescr
         placeholder='add Task' />
       <textarea name="postContent" placeholder='you can add description later' rows={4} cols={40} onChange={handleDescription} value={inputArea} className='h-15 focus:outline-4 focus:outline-emerald-500 bg-gray-300 outline-2 outline-blue-700 p-2 text-sm' />
   
-      <select onChange={handleOption} value={priority} className='bg-amber-400 p-2 '>
+      <select onChange={handleOption} value={priority} className='bg-sky-50 p-2 h-10 '>
         <option value="" disabled>Select priority</option>
         <option value="low">Low</option>
         <option value="medium">Medium</option>

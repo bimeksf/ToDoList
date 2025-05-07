@@ -1,7 +1,7 @@
 import { useState, useEffect ,useRef } from "react";
 import dayjs from 'dayjs';
 import React from 'react';
-
+import { motion } from "framer-motion";
 
 
 
@@ -45,7 +45,7 @@ export default function Task({ task, onToggle, handleDelete, onEdit }) {
   return (
     <div className="flex justify-center items-center">
     {afterDeadline && <span className="text-xl font-bold"> Task is After Deadline!</span>}
-  <li className={`${task.completed ? "underline" : ""} bg-blue-400 rounded-md m-4 p-2  ${afterDeadline ? "bg-red-200" : ""}   `} onDoubleClick={() => setIsEditing(true)}>
+  <motion.li layout className={`${task.completed ? "underline" : ""} bg-blue-400 rounded-md m-4 p-2  ${afterDeadline ? "bg-red-200" : ""}   `} onDoubleClick={() => setIsEditing(true)}>
     {isEditing ? (
       <div className='grid grid-cols-2 grid-rows-4 gap-4'>
         <input
@@ -119,7 +119,7 @@ setEditedArea(task.description)
       </div>
     )}
 
-  </li>
+  </motion.li>
 
 
     </div>
